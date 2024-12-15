@@ -1,0 +1,28 @@
+<html>
+    <body>
+        <input style="width: 250px;" placeholder="enter website"></input><br>
+        <p>paste the result into your new tab</p>
+        <button>go</button>
+        <p id="result"></p>
+        <script>
+            let search = "";
+            document.querySelector("button").addEventListener("click", (event) => {
+                search = document.querySelector("input").value;
+                if (search.includes("https://")) {
+                } else {
+                    search = "https://" + search;
+                }
+                let data = "";
+                fetch(search)
+                    .then(response => response.text())
+                    .then(html => {
+                        data = "data:text/html," + html.replace(/#/g, '%23').trim();
+                        document.getElementById("result").textContent = data;
+                    })
+                    .catch(error => {
+                        document.getElementById("result").textContent = "ERORR: cant get this website";
+                    });
+            });
+        </script>
+    </body>
+</html>
